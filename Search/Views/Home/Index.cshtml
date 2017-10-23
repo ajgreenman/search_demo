@@ -1,0 +1,94 @@
+﻿@model Search.Models.ArticleSearchModel
+
+@{
+    ViewBag.Title = "Hagerty Search";
+    Layout = "~/Views/Layout.cshtml";
+}
+
+<br/>
+<div class="panel-body">
+    @using (Html.BeginForm())
+    {
+        <div class="container-fluid" style="padding-left: 35%">
+            <h3 style="display: inline;">Article Search</h3>
+            @Html.TextBoxFor(m => m.SearchText)
+            <input type="submit" value="Search" class="button"/>
+            @Html.ActionLink("Vehicles", "Vehicles", null, new { @class = "button" })
+        </div>
+    }
+
+    <div>
+        @if (Model?.SearchText != null)
+        {
+            <br/>
+            <div class="story-headline-runner">
+                <div class="container-fluid wrapper">
+                    <h1 class="list-heading primary-list-heading">
+                        Results for - '@Model.SearchText'
+                    </h1>
+                </div>
+            </div>
+            if (Model?.Articles == null || !Model.Articles.Any())
+            {
+                <p>Your search did not match any documents.</p>
+            }
+            else
+            {
+                <div id="list-container">
+                    @foreach (var article in Model.Articles)
+                    {
+                        <article class="story-preview-container">
+                            <a href="@article.Url" class="story-link">
+                                <h1 class="title">@article.Title</h1>
+                                <p class="summary hide-to-desktop">@article.Summary</p>
+                                <figure class="thumb-container">
+                                    @{
+                                        var noThumb = String.IsNullOrEmpty(article.Thumbnail) ? "no-thumb" : "";
+                                    }
+                                    <span class="thumb @noThumb thumb-color thumb-zoom ">
+                                        @if (!string.IsNullOrEmpty(article.Thumbnail))
+                                        {
+                                            <img src="@article.Thumbnail" />
+                                        }
+                                    </span>
+                                </figure>
+                                <p class="byline-connector">
+                                    By @article.Author //
+                                    <time datetime="@article.Date.ToString("yyyy-MM-ddThh:mm:ssK")" class="publish-date-stamp">@article.Date.ToString("MMMM dd, yyyy")</time>
+                                </p>
+                            </a>
+                        </article>
+                    }
+                </div>
+                <div id="facet-container">
+                    <hr/>
+                    <h3 style="color: #017DC7">Categories</h3>
+                    @foreach (var category in Model.Categories)
+                    {
+                        if (category.Value > 0)
+                        {
+                            <div>
+                                <h4 style="display: inline;">@category.Key:</h4>
+                                <span>@category.Value</span>
+                            </div>
+                        }
+                    }
+                </div>
+                <div id="facet-container">
+                    <hr/>
+                    <h3 style="color: #017DC7">Keywords</h3>
+                    @foreach (var keyword in Model.Keywords)
+                    {
+                        if (keyword.Value > 0)
+                        {
+                            <div>
+                                <h4 style="display: inline;">@keyword.Key:</h4>
+                                <span>@keyword.Value</span>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>

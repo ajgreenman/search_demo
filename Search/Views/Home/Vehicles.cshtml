@@ -1,0 +1,81 @@
+﻿@model Search.Models.HvtSearchModel
+
+@{
+    ViewBag.Title = "Hagerty Search";
+    Layout = "~/Views/Layout.cshtml";
+}
+
+<br />
+<div class="panel-body">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new {id = "vehicleForm"}))
+    {
+        <div class="container-fluid" style="padding-left: 35%">
+            <h3 style="display: inline; vertical-align:top">Vehicle Search</h3>
+            <div id="search-area">
+                @Html.TextBoxFor(m => m.SearchText, new {id = "textSearch", autocomplete = "off"})
+                <div id="suggestions" style="display: none">
+                </div>
+            </div>
+            <input type="submit" value="Search" class="button" style="vertical-align:top"/>
+            @Html.ActionLink("Articles", "Index", null, new {@class = "button", style = "vertical-align:top" }) 
+        </div>
+    }
+
+    <div>
+        @if (Model?.SearchText != null)
+        {
+            <br/>
+            <div class="story-headline-runner">
+                <div class="container-fluid wrapper">
+                    <h1 class="list-heading primary-list-heading">
+                        Results for - '@Model.SearchText'
+                    </h1>
+                </div>
+            </div>
+            if (Model?.Vehicles == null || !Model.Vehicles.Any())
+            {
+                <p>Your search did not match any documents.</p>
+            }
+            else
+            {
+                <div id="list-container">
+                    @foreach (var vehicle in Model.Vehicles)
+                    {
+                        var link = "https://mo.hagerty.com/apps/valuationtools/" + vehicle.HvtLink;
+                        <a href="@link"><p>@vehicle.DisplayName</p></a>
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<script>
+    $("#textSearch").keyup(function () {
+        var searchText = $("#textSearch").val();
+        $.ajax({
+            type: "POST",
+            url: "/Home/Suggestions",
+            data: `{searchText:"${searchText}"}`,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (results) {
+                if (results.NumFound > 0) {
+                    $("#suggestions").empty();
+                    $("#suggestions").show();
+                    $.each(results.Suggestion, function (i, v) {
+                        $("#suggestions").append(`<p class="suggestion-button">${v}</p>`);
+                    });
+
+                    $(".suggestion-button").click(function () {
+                        var text = $(this).text();
+                        $("#textSearch").val(text);
+                        $("#vehicleForm").submit();
+                    });
+                }
+            }
+        });
+    });
+
+    
+</script>
