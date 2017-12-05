@@ -32,9 +32,13 @@ namespace Search.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string searchText)
+        public ActionResult Index(string searchText, string keywordSelection)
         {
-            return View(FindArticleResults(searchText));
+            if (searchText.Equals("index it"))
+            {
+                CreateCustomerIndex();
+            }
+            return View(FindArticleResults(searchText, keywordSelection));
         }
 
         [HttpGet]
@@ -46,7 +50,23 @@ namespace Search.Controllers
         [HttpPost]
         public ActionResult Vehicles(string searchText)
         {
+            if (searchText.Equals("index it"))
+            {
+                CreateVehicleIndex();
+            }
             return View(FindVehicleResults(searchText));
+        }
+
+        [HttpGet]
+        public ActionResult Customers()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Customers(string searchText)
+        {
+            return View(FindCustomerResults(searchText));
         }
 
         [HttpPost]
@@ -55,7 +75,7 @@ namespace Search.Controllers
             var solr = new SolrConnection(SolrConfig.VehicleInformationIndex);
             var parameters = new Dictionary<string, string>
             {
-                {"q", searchText},
+                {"spellcheck.q", searchText},
                 {"wt", "json"}
             };
 
@@ -71,6 +91,100 @@ namespace Search.Controllers
             details.SearchText = searchText;
 
             return Json(details);
+        }
+
+        private void CreateVehicleIndex()
+        {
+            //var vehicleIndex = ServiceLocator.Current.GetInstance<ISolrOperations<HvtDocument>>();
+            //vehicleIndex.Delete(new SolrQuery("*:*"));
+            //vehicleIndex.Commit();
+
+            //var db = new VehicleInformationDataContext();
+            //var hvtDocs = from bv in db.BaseVehicles
+            //              join y in db.Years on bv.YearID equals y.YearID
+            //              join m in db.Makes on bv.MakeID equals m.MakeID
+            //              join n in db.Models on bv.ModelID equals n.ModelID
+            //              select new HvtDocument
+            //              {
+            //                  Id = bv.BaseVehicleID,
+            //                  Year = y.YearID,
+            //                  MakeId = m.MakeID,
+            //                  MakeName = m.MakeName,
+            //                  ModelId = n.ModelID,
+            //                  ModelName = n.ModelName,
+            //                  DisplayName = y.YearID + " " + m.MakeName + " " + n.ModelName,
+            //                  MakeModel = m.MakeName + " " + n.ModelName
+            //              };
+
+
+            //foreach (var hvtDoc in hvtDocs)
+            //{
+            //    vehicleIndex.Add(hvtDoc);
+            //}
+        }
+
+        private void CreateCustomerIndex()
+        {
+            //var drivetrainCustomerIndex = ServiceLocator.Current.GetInstance<ISolrOperations<CustomerDocument>>();
+
+            //drivetrainCustomerIndex.Delete(new SolrQuery("*:*"));
+            //drivetrainCustomerIndex.Commit();
+
+            //var db = new DashboardAutoDataContext();
+            //var customerDocs = from c in db.Customers
+            //    join ce in db.CustomerEmails on c.CustomerPK equals ce.CustomerFK
+            //    join cp in db.CustomerPhones on c.CustomerPK equals cp.CustomerFK
+            //    where c.CustomerAccountFK < 200000
+            //    where c.CustomerAccountFK > 100000
+            //    select new CustomerDocument
+            //    {
+            //        CustomerAccountPK = c.CustomerAccountFK,
+            //        FirstName = c.FirstName.Trim(),
+            //        LastName = c.LastName.Trim(),
+            //        DisplayName = new[] {c.FirstName.Trim() + " " + c.LastName.Trim()},
+            //        EmailAddress = ce.EmailAddress.Trim(),
+            //        PhoneNumber = cp.AreaCode.Trim() + "-" + cp.Prefix.Trim() + "-" + cp.Suffix.Trim()
+            //    };
+
+            //foreach (var doc in customerDocs)
+            //{
+            //    drivetrainCustomerIndex.Add(doc);
+            //}
+        }
+
+        private CustomerSearchModel FindCustomerResults(string searchText)
+        {
+            var solr = ServiceLocator.Current.GetInstance<ISolrOperations<CustomerDocument>>();
+
+            var queryOptions = new QueryOptions
+            {
+                OrderBy = { new SortOrder("last_name_s", Order.ASC), new SortOrder("first_name_s", Order.ASC) },
+                Rows = 10
+            };
+
+            var customers = new List<CustomerModel>();
+            var documents = solr.Query(GetCustomerQuery(searchText), queryOptions);
+
+            foreach (var document in documents)
+            {
+                var customer = new CustomerModel
+                {
+                    CustomerAccountPK = document.CustomerAccountPK,
+                    FirstName = document.FirstName,
+                    LastName = document.LastName,
+                    DisplayName = ParseSolrList(document.DisplayName),
+                    EmailAddress = document.EmailAddress,
+                    PhoneNumber = document.PhoneNumber
+                };
+
+                customers.Add(customer);
+            }
+
+            return new CustomerSearchModel
+            {
+                SearchText = searchText,
+                Customers = customers
+            };
         }
 
         private HvtSearchModel FindVehicleResults(string searchText)
@@ -97,7 +211,7 @@ namespace Search.Controllers
             };
         }
 
-        private ArticleSearchModel FindArticleResults(string searchText)
+        private ArticleSearchModel FindArticleResults(string searchText, string keyword)
         {
             var solr = ServiceLocator.Current.GetInstance<ISolrOperations<RawDocumentModel>>();
 
@@ -106,7 +220,8 @@ namespace Search.Controllers
                 FilterQueries = new List<ISolrQuery>
                 {
                     GetTemplateFilterQuery(),
-                    GetPathFilterQuery()
+                    GetPathFilterQuery(),
+                    GetKeywordFilterQuery(keyword)
                 },
                 Facet = new FacetParameters
                 {
@@ -146,6 +261,27 @@ namespace Search.Controllers
             };
         }
 
+        private ISolrQuery GetCustomerQuery(string searchText)
+        {
+            string query;
+
+            int pk;
+            if (int.TryParse(searchText, out pk))
+            {
+                var pkQuery = "(customer_account_pk:\"" + pk + "\") ";
+                query = pkQuery;
+            }
+            else
+            {
+                var nameQuery = "(display_name_t:\"" + searchText + "\") ";
+                var emailQuery = "(email_address_s:\"" + searchText + "\") ";
+                var phoneQuery = "(phone_number_s:\"" + searchText + "\") ";
+                query = nameQuery + emailQuery + phoneQuery;
+            }
+            
+            return new LocalParams { { "defType", "edismax" } } + new SolrQuery(query);
+        }
+
         private ISolrQuery GetVehicleQuery(string searchText)
         {
             var query = "(make_model:\"" + searchText + "\") ";
@@ -170,6 +306,16 @@ namespace Search.Controllers
         private ISolrQuery GetPathFilterQuery()
         {
             return new SolrQuery(ItemPathField + ":(" + ArticlesStartingPoint.ToSolrReadyString() + ")");
+        }
+
+        private ISolrQuery GetKeywordFilterQuery(string keyword)
+        {
+            if (string.IsNullOrEmpty(keyword))
+            {
+                return null;
+            }
+
+            return new SolrQuery("keywordlabels_sm:(\"" + keyword + "\")");
         }
 
         public static string GetSummary(IEnumerable<string> summaries, IEnumerable<string> contents)

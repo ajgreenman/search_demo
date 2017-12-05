@@ -1,0 +1,50 @@
+﻿@model Search.Models.CustomerSearchModel
+
+@{
+    ViewBag.Title = "Hagerty Search";
+    Layout = "~/Views/Layout.cshtml";
+}
+
+<br />
+<div class="panel-body">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new {id = "searchForm"}))
+    {
+        <div class="container-fluid" style="padding-left: 35%">
+            <h3 style="display: inline;">Customer Search</h3>
+            @Html.TextBoxFor(m => m.SearchText)
+            <input type="submit" value="Search" class="button"/>
+        </div>
+    }
+
+    <div>
+        @if (Model?.SearchText != null)
+        {
+            <br/>
+            <div class="story-headline-runner">
+                <div class="container-fluid wrapper">
+                    <h1 class="list-heading primary-list-heading">
+                        Results for - '@Model.SearchText'
+                    </h1>
+                </div>
+            </div>
+            if (Model?.Customers == null || !Model.Customers.Any())
+            {
+                <p>Your search did not match any documents.</p>
+            }
+            else
+            {
+                <div id="list-container">
+                    @foreach (var article in Model.Customers)
+                    {
+                        <div>
+                            <h3>@article.DisplayName</h3>
+                            <p><strong>Customer Account PK</strong> - <i>@article.CustomerAccountPK</i></p>
+                            <p><strong>Email Address</strong> - @article.EmailAddress</p>
+                            <p><strong>Phone Number</strong> - @article.PhoneNumber</p>
+                        </div>
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>

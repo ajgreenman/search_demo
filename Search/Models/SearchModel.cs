@@ -20,4 +20,9 @@ namespace Search.Models
     {
         public IEnumerable<HvtDocument> Vehicles { get; set; }
     }
+
+    public class CustomerSearchModel : SearchModel
+    {
+        public IEnumerable<CustomerModel> Customers { get; set; }
+    }
 }

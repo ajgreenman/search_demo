@@ -7,13 +7,14 @@
 
 <br/>
 <div class="panel-body">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "searchForm" }))
     {
         <div class="container-fluid" style="padding-left: 35%">
             <h3 style="display: inline;">Article Search</h3>
             @Html.TextBoxFor(m => m.SearchText)
+            <input type="hidden" value="" id="keywordSelection" name="keywordSelection"/>
             <input type="submit" value="Search" class="button"/>
-            @Html.ActionLink("Vehicles", "Vehicles", null, new { @class = "button" })
+            @*@Html.ActionLink("Vehicles", "Vehicles", null, new {@class = "button"})*@
         </div>
     }
 
@@ -34,36 +35,52 @@
             }
             else
             {
-                <div id="list-container">
-                    @foreach (var article in Model.Articles)
-                    {
-                        <article class="story-preview-container">
-                            <a href="@article.Url" class="story-link">
-                                <h1 class="title">@article.Title</h1>
-                                <p class="summary hide-to-desktop">@article.Summary</p>
-                                <figure class="thumb-container">
-                                    @{
-                                        var noThumb = String.IsNullOrEmpty(article.Thumbnail) ? "no-thumb" : "";
-                                    }
-                                    <span class="thumb @noThumb thumb-color thumb-zoom ">
-                                        @if (!string.IsNullOrEmpty(article.Thumbnail))
-                                        {
-                                            <img src="@article.Thumbnail" />
+                <div class="row reset-top reset-bottom">
+                    <div id="facet-container" class="col xs first-md md-1-of-4 sidebar-left">
+                        <h3 style="color: #017DC7">Keywords</h3>
+                        @foreach (var keyword in Model.Keywords.Take(10))
+                        {
+                            if (keyword.Value > 0)
+                            {
+                                <div>
+                                    <h4 style="display: inline;">@keyword.Key:</h4>
+                                    <span>@keyword.Value</span>
+                                    <input type="checkbox" class="keywordSelector" value="@keyword.Key"/>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div id="list-container" class="col xs first-xs md-3-of-4">
+                        @foreach (var article in Model.Articles)
+                        {
+                            <article class="story-preview-container">
+                                <a href="@article.Url" class="story-link">
+                                    <h1 class="title">@article.Title</h1>
+                                    <p class="summary hide-to-desktop">@article.Summary</p>
+                                    <figure class="thumb-container">
+                                        @{
+                                            var noThumb = String.IsNullOrEmpty(article.Thumbnail) ? "no-thumb" : "";
                                         }
-                                    </span>
-                                </figure>
-                                <p class="byline-connector">
-                                    By @article.Author //
-                                    <time datetime="@article.Date.ToString("yyyy-MM-ddThh:mm:ssK")" class="publish-date-stamp">@article.Date.ToString("MMMM dd, yyyy")</time>
-                                </p>
-                            </a>
-                        </article>
-                    }
+                                        <span class="thumb @noThumb thumb-color thumb-zoom ">
+                                            @if (!string.IsNullOrEmpty(article.Thumbnail))
+                                            {
+                                                <img src="@article.Thumbnail" />
+                                            }
+                                        </span>
+                                    </figure>
+                                    <p class="byline-connector">
+                                        By @article.Author //
+                                        <time datetime="@article.Date.ToString("yyyy-MM-ddThh:mm:ssK")" class="publish-date-stamp">@article.Date.ToString("MMMM dd, yyyy")</time>
+                                    </p>
+                                </a>
+                            </article>
+                        }
+                    </div>
                 </div>
                 <div id="facet-container">
                     <hr/>
                     <h3 style="color: #017DC7">Categories</h3>
-                    @foreach (var category in Model.Categories)
+                    @foreach (var category in Model.Categories.Take(10))
                     {
                         if (category.Value > 0)
                         {
@@ -74,21 +91,15 @@
                         }
                     }
                 </div>
-                <div id="facet-container">
-                    <hr/>
-                    <h3 style="color: #017DC7">Keywords</h3>
-                    @foreach (var keyword in Model.Keywords)
-                    {
-                        if (keyword.Value > 0)
-                        {
-                            <div>
-                                <h4 style="display: inline;">@keyword.Key:</h4>
-                                <span>@keyword.Value</span>
-                            </div>
-                        }
-                    }
-                </div>
             }
         }
     </div>
 </div>
+
+<script>
+    $(".keywordSelector").click(function () {
+        var text = $(this).attr("value")
+        $("#keywordSelection").val(text);
+        $("#searchForm").submit();
+    });
+</script>

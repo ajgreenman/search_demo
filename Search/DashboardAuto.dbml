@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DashboardAutoDEV" Class="DashboardAutoDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=sqlDTAutoUSAdev.hagerty.com;Initial Catalog=DashboardAutoDEV;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DashboardAutoDEVConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Customer" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="CustomerPK" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="LKNamePrefixFK" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="LKNameSuffixFK" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="Char(60)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="MiddleName" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Sex" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="DateOfBirth" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="ActiveInd" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerAccountFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LKCustomerTypeFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LKRelationshipTypeFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HouseholdMemberInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ExcludedDriverInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="VehicleAdditionalInsuredInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CustomerRepInd" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="GoesByName" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="DriversLicenseNo" Type="System.String" DbType="Char(25) NOT NULL" CanBeNull="false" />
+      <Column Name="DriversLicenseStateFK" Type="System.String" DbType="Char(2) NOT NULL" CanBeNull="false" />
+      <Column Name="MaritalStatus" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="LKOccupationFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LKCommPrefFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreditScore" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UndisclosedDriverInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CollectorClubInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CollectorClubNotes" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdTimestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdUser" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="PolicyExcludedDriverInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PolicyAdditionalInsuredInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EntityCustomerName" Type="System.String" DbType="VarChar(75) NOT NULL" CanBeNull="false" />
+      <Column Name="ElectronicRenewalPreferenceInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PreferredContactFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreditScoreReportDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OperatesCollectorVehiclesInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MarketingMaterialInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="WebSiteURL" Type="System.String" DbType="VarChar(75) NOT NULL" CanBeNull="false" />
+      <Column Name="HIARowVersion" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
+      <Column Name="alias" Type="System.String" DbType="VarChar(75) NOT NULL" CanBeNull="false" />
+      <Column Name="tmpCustNum" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="tmpLegacyKey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="tmpPolicyNumber" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="tmpVehicleNumber" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="YearsLicensed" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="YearsInCollectorCarHobby" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OptOutMailingsInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EstimatedDateOfBirthInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ElectronicRenewalConfirmationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ElectronicRenewalSignupDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ReportedSeniorCitizenInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ReportedYearsLicensed" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SecondaryIsAnOrInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ForeignAddressInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="HobbyStartYear" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="YearsLicensedReevaluatedForPolicyEffectiveDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PendingReportedYearsLicensed" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CommercialInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SecondaryIsNamedInsuredInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Occupation" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="NotLicensedInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ActiveDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FlexTierTriggerDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CustomerAccountSTPUWRptResponseDriverFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MonthFirstLicensed" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="YearFirstLicensed" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PersonFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DriversLicenseNoEncrypted" Type="System.Data.Linq.Binary" DbType="VarBinary(256)" CanBeNull="true" />
+      <Column Name="DIFMFlexGrandfatherInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="LicensedLessThanThreeYearsInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="UnknownDLNoInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="RelevantDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="LKABGridStepScoreFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Customer_Customer" Member="Customers" ThisKey="CustomerPK" OtherKey="PreferredContactFK" Type="Customer" />
+      <Association Name="Customer_CustomerPhone" Member="CustomerPhones" ThisKey="CustomerPK" OtherKey="CustomerFK" Type="CustomerPhone" />
+      <Association Name="Customer_CustomerEmail" Member="CustomerEmails" ThisKey="CustomerPK" OtherKey="CustomerFK" Type="CustomerEmail" />
+      <Association Name="Customer_Customer" Member="Customer1" ThisKey="PreferredContactFK" OtherKey="CustomerPK" Type="Customer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CustomerPhone" Member="CustomerPhones">
+    <Type Name="CustomerPhone">
+      <Column Name="CustomerPhonePK" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="LKPhoneFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CustomerFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AreaCode" Type="System.String" DbType="Char(3)" CanBeNull="true" />
+      <Column Name="Prefix" Type="System.String" DbType="Char(3)" CanBeNull="true" />
+      <Column Name="Suffix" Type="System.String" DbType="Char(4)" CanBeNull="true" />
+      <Column Name="Extension" Type="System.String" DbType="Char(5)" CanBeNull="true" />
+      <Column Name="EffectiveDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ExpirationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdTimestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdUser" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="DefaultPhoneInd" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="HIARowVersion" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
+      <Column Name="AptifyCustomerPhoneID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Customer_CustomerPhone" Member="Customer" ThisKey="CustomerFK" OtherKey="CustomerPK" Type="Customer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CustomerEmail" Member="CustomerEmails">
+    <Type Name="CustomerEmail">
+      <Column Name="CustomerEmailPK" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustomerFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EmailAddress" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="LKEmailTypeFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EffectiveDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ExpirationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdTimestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdUser" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="DefaultEmailInd" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LoginIDInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="HIARowVersion" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
+      <Column Name="PaperlessInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="LKLoginTrackingFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UndeliverableInd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Customer_CustomerEmail" Member="Customer" ThisKey="CustomerFK" OtherKey="CustomerPK" Type="Customer" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 18.25" name="DashboardAuto">
+  <DataContextMoniker Name="/DashboardAutoDataContext" />
+  <nestedChildShapes>
+    <classShape Id="c965ebc7-3bfe-4d47-b306-49a7099a47d5" absoluteBounds="6, 2.625, 2, 14.847394205729165">
+      <DataClassMoniker Name="/DashboardAutoDataContext/Customer" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5f6c97a9-1983-4a00-8afd-57048502d6b8" absoluteBounds="6.015, 3.085, 1.9700000000000002, 14.287394205729166" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.70923076923077 : 17.4723942057292); (6.70923076923077 : 17.7223942057292); (7.30461538461539 : 17.7223942057292); (7.30461538461539 : 17.4723942057292)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DashboardAutoDataContext/Customer/Customer_Customer" />
+      <nodes>
+        <classShapeMoniker Id="c965ebc7-3bfe-4d47-b306-49a7099a47d5" />
+        <classShapeMoniker Id="c965ebc7-3bfe-4d47-b306-49a7099a47d5" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="445caa11-8804-4aa9-979c-f8435ab68770" absoluteBounds="8.75, 6.125, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/DashboardAutoDataContext/CustomerPhone" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d1d6fa73-3c4d-4e46-b787-88aafabce03b" absoluteBounds="8.765, 6.585, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4edfbf11-19cf-42d3-a5cf-9ca1ffaf7e97" absoluteBounds="8.75, 10.375, 2, 3.5016097005208309">
+      <DataClassMoniker Name="/DashboardAutoDataContext/CustomerEmail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4c2d314a-0a3f-4739-acc4-5d7c0ba604e4" absoluteBounds="8.765, 10.835, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8 : 7.87580485026042); (8.75 : 7.87580485026042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DashboardAutoDataContext/Customer/Customer_CustomerPhone" />
+      <nodes>
+        <classShapeMoniker Id="c965ebc7-3bfe-4d47-b306-49a7099a47d5" />
+        <classShapeMoniker Id="445caa11-8804-4aa9-979c-f8435ab68770" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8 : 12.1258048502604); (8.75 : 12.1258048502604)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DashboardAutoDataContext/Customer/Customer_CustomerEmail" />
+      <nodes>
+        <classShapeMoniker Id="c965ebc7-3bfe-4d47-b306-49a7099a47d5" />
+        <classShapeMoniker Id="4edfbf11-19cf-42d3-a5cf-9ca1ffaf7e97" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

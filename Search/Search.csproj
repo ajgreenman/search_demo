@@ -161,6 +161,11 @@
     <Compile Include="App_Start\SolrConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DashboardAuto.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DashboardAuto.dbml</DependentUpon>
+    </Compile>
     <Compile Include="DataClasses1.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -172,6 +177,8 @@
     </Compile>
     <Compile Include="Helpers\ImageUrlHelper.cs" />
     <Compile Include="Models\ArticleModel.cs" />
+    <Compile Include="Models\CustomerDocument.cs" />
+    <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\HvtDocument.cs" />
     <Compile Include="Models\RawDocumentModel.cs" />
     <Compile Include="Models\SearchModel.cs" />
@@ -197,6 +204,11 @@
     <Content Include="DataClasses1.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="DashboardAuto.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DashboardAuto.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -227,7 +239,7 @@
     </Content>
     <Content Include="Views\Home\Vehicles.cshtml" />
     <Content Include="Views\Layout.cshtml" />
-    <Content Include="Views\Home\View.cshtml" />
+    <Content Include="Views\Home\Customers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -250,6 +262,11 @@
   <ItemGroup>
     <None Include="VehicleInformation.dbml.layout">
       <DependentUpon>VehicleInformation.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DashboardAuto.dbml.layout">
+      <DependentUpon>DashboardAuto.dbml</DependentUpon>
     </None>
   </ItemGroup>
   <PropertyGroup>
